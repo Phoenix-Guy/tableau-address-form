@@ -10,33 +10,34 @@
   <input type="text" id="address" placeholder="住所を入力" style="width: 100%; padding: 8px;">
   <button id="submit" style="margin-top: 10px; padding: 8px 15px;">送信</button>
 
-  <script>
-    document.getElementById('submit').addEventListener('click', () => {
-      const address = document.getElementById('address').value;
-      if(!address) {
-        alert('住所を入力してください');
-        return;
-      }
+<script>
+  document.getElementById('submit').addEventListener('click', () => {
+    const address = document.getElementById('address').value;
+    if(!address) {
+      alert('住所を入力してください');
+      return;
+    }
 
-      fetch('https://script.google.com/macros/s/AKfycbxdEtLq_G3Azyjs-CiHYd1nP9OwOkuUCt2XPbX8XslwOkRWuxkXoOZjxSessYL7eldEWA/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: `address=${encodeURIComponent(address)}`
-      })
-      .then(() => {
-        alert('送信しました。スプレッドシートを確認してください。');
-        document.getElementById('address').value = '';
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        alert('エラーが発生しました。');
-      });
+    fetch('https://script.google.com/macros/s/AKfycbxdEtLq_G3Azyjs-CiHYd1nP9OwOkuUCt2XPbX8XslwOkRWuxkXoOZjxSessYL7eldEWA/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `address=${encodeURIComponent(address)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert('送信しました。スプレッドシートを確認してください。');
+      document.getElementById('address').value = '';
+    })
+    .catch((error) => {
+      alert(`エラーが発生しました：${error}`);
+      console.error('Error:', error);
     });
+  });
 
-    tableau.extensions.initializeAsync();
-  </script>
+  tableau.extensions.initializeAsync();
+</script>
+
 </body>
 </html>
