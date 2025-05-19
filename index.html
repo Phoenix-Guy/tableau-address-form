@@ -19,21 +19,21 @@
     }
 
     fetch('https://script.google.com/macros/s/AKfycbwNWGKUXf7KD4rGv5Li7URqJFFmJlGuk5x0gvyz_ttsV1xJ554-XR5zdWJjh6KAYxWBoA/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `address=${encodeURIComponent(address)}`
-    })
-    .then(response => response.json())
-    .then(data => {
-      alert('送信しました。スプレッドシートを確認してください。');
-      document.getElementById('address').value = '';
-    })
-    .catch((error) => {
-      alert(`エラーが発生しました：${error}`);
-      console.error('Error:', error);
-    });
+	  method: 'POST',
+	  mode: 'no-cors', // これを再度追加します
+	  headers: {
+	    'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+	  body: `address=${encodeURIComponent(address)}`
+	})
+	.then(() => {
+	  alert('送信しました。スプレッドシートを確認してください。');
+	  document.getElementById('address').value = '';
+	})
+	.catch((error) => {
+	  console.error('Error:', error);
+	  alert('エラーが発生しました。');
+	});
   });
 
   tableau.extensions.initializeAsync();
